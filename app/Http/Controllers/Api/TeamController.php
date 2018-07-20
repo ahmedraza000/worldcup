@@ -27,7 +27,12 @@ class TeamController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            "name" => ["required"],
+            "country" => ["required"],
+        ]);
+
+        return Team::create($data);
     }
 
     /**

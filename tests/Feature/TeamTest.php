@@ -70,5 +70,50 @@ class TeamTest extends TestCase
 
         $response->assertStatus(401);
     }
+
+    /** @test */
+    public function creating_team()
+    {
+        Passport::actingAs(factory(User::class)->create());
+
+        $team = [
+            "name" => "Team 1",
+            "country" => "Russia",
+        ];
+
+        $response = $this->postJson('api/teams', $team);
+
+        $response->assertStatus(201);
+    }
+
+    /** @test */
+    public function require_authenticated_user_for_creating_team()
+    {
+        $team = [
+            "name" => "Team 1",
+            "country" => "Russia",
+        ];
+
+        $response = $this->postJson('api/teams', $team);
+
+        $response->assertStatus(401);
+    }
+    
+    /** @test */
+    public function validate_team_details_before_storing_to_db()
+    {
+        Passport::actingAs(factory(User::class)->create());
+
+        $team = [
+            "name" => "",
+            "country" => "",
+        ];
+
+        $response = $this->postJson('api/teams', $team);
+
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors("name");
+        $response->assertJsonValidationErrors("country");
+    }
     
 }
