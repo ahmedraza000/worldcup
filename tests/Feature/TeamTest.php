@@ -25,7 +25,7 @@ class TeamTest extends TestCase
         $team4 = factory(Team::class)->create();
         $team5 = factory(Team::class)->create();
 
-        $response = $this->withExceptionHandling()->getJson(route('api.teams.index'));
+        $response = $this->withExceptionHandling()->getJson('api/teams');
 
         $response->assertSuccessful();
         $this->assertCount(5, $response->json('data'));
@@ -39,16 +39,36 @@ class TeamTest extends TestCase
     }
 
     /** @test */
+    public function require_authenticated_user_in_retrieving_team_list()
+    {
+        factory(Team::class, 5)->create();
+
+        $response = $this->withExceptionHandling()->getJson('api/teams');
+
+        $response->assertStatus(401);
+    }
+
+    /** @test */
     public function can_retrieve_team_details()
     {
         Passport::actingAs(factory(User::class)->create());
 
         $team = factory(Team::class)->create();
 
-        $response = $this->withExceptionHandling()->getJson(route('api.teams.show', $team));
+        $response = $this->withExceptionHandling()->getJson('api/teams/' . $team->id);
 
         $response->assertSuccessful();
         $response->assertExactJson($team->toArray());
+    }
+
+    /** @test */
+    public function require_authenticated_user_in_retrieving_team_details()
+    {
+        $team = factory(Team::class)->create();
+
+        $response = $this->withExceptionHandling()->getJson('api/teams/' . $team->id);
+
+        $response->assertStatus(401);
     }
     
 }
