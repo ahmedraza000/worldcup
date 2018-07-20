@@ -14,7 +14,8 @@ class TeamTest extends TestCase
 
     use RefreshDatabase;
 
-    public function testListTeams()
+    /** @test */
+    public function can_list_teams()
     {
         Passport::actingAs(factory(User::class)->create());
 
@@ -35,6 +36,19 @@ class TeamTest extends TestCase
             $team4->toArray(),
             $team5->toArray(),
         ]]);
+    }
+
+    /** @test */
+    public function can_retrieve_team_details()
+    {
+        Passport::actingAs(factory(User::class)->create());
+
+        $team = factory(Team::class)->create();
+
+        $response = $this->withExceptionHandling()->getJson(route('api.teams.show', $team));
+
+        $response->assertSuccessful();
+        $response->assertExactJson($team->toArray());
     }
     
 }
