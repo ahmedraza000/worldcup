@@ -25,7 +25,7 @@ class TeamTest extends TestCase
         $team4 = factory(Team::class)->create();
         $team5 = factory(Team::class)->create();
 
-        $response = $this->withExceptionHandling()->getJson('api/teams');
+        $response = $this->getJson('api/teams');
 
         $response->assertSuccessful();
         $this->assertCount(5, $response->json('data'));
@@ -43,7 +43,7 @@ class TeamTest extends TestCase
     {
         factory(Team::class, 5)->create();
 
-        $response = $this->withExceptionHandling()->getJson('api/teams');
+        $response = $this->getJson('api/teams');
 
         $response->assertStatus(401);
     }
@@ -55,7 +55,7 @@ class TeamTest extends TestCase
 
         $team = factory(Team::class)->create();
 
-        $response = $this->withExceptionHandling()->getJson('api/teams/' . $team->id);
+        $response = $this->getJson('api/teams/' . $team->id);
 
         $response->assertSuccessful();
         $response->assertExactJson($team->toArray());
@@ -66,7 +66,7 @@ class TeamTest extends TestCase
     {
         $team = factory(Team::class)->create();
 
-        $response = $this->withExceptionHandling()->getJson('api/teams/' . $team->id);
+        $response = $this->getJson('api/teams/' . $team->id);
 
         $response->assertStatus(401);
     }
