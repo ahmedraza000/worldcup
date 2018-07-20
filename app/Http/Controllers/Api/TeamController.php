@@ -53,9 +53,16 @@ class TeamController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Team $team)
     {
-        //
+        $data = $request->validate([
+            "name" => ['required'],
+            "country" => ['required'],
+        ]);
+
+        $team->fill($data)->save();
+
+        return response()->json([], 204);
     }
 
     /**
