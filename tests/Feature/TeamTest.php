@@ -115,5 +115,24 @@ class TeamTest extends TestCase
         $response->assertJsonValidationErrors("name");
         $response->assertJsonValidationErrors("country");
     }
+
+    /** @test */
+    public function updating_team_details()
+    {
+        Passport::actingAs(factory(User::class)->create());
+
+        $team = factory(Team::class)->create();
+
+        $newTeamDetails = [
+            "name" => "New Team",
+            "country" => "New Country",
+        ];
+
+        $response = $this->putJson('api/teams/' . $team->id, $newTeamDetails);
+
+        $response->assertStatus(204);
+        $this->assertEquals("New Team", $team->fresh()->name);
+        $this->assertEquals("New Country", $team->fresh()->country);
+    }
     
 }
