@@ -5,7 +5,7 @@ use App\Team;
 
 $factory->define(Team::class, function (Faker $faker) {
     return [
-        "name" => $faker->name,
+        "team_name" => $faker->name,
         "country" => $faker->country,
     ];
 });

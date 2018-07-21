@@ -77,7 +77,7 @@ class TeamTest extends TestCase
         Passport::actingAs(factory(User::class)->create());
 
         $team = [
-            "name" => "Team 1",
+            "team_name" => "Team 1",
             "country" => "Russia",
         ];
 
@@ -90,7 +90,7 @@ class TeamTest extends TestCase
     public function require_authenticated_user_for_creating_team()
     {
         $team = [
-            "name" => "Team 1",
+            "team_name" => "Team 1",
             "country" => "Russia",
         ];
 
@@ -105,14 +105,14 @@ class TeamTest extends TestCase
         Passport::actingAs(factory(User::class)->create());
 
         $team = [
-            "name" => "",
+            "team_name" => "",
             "country" => "",
         ];
 
         $response = $this->postJson('api/teams', $team);
 
         $response->assertStatus(422);
-        $response->assertJsonValidationErrors("name");
+        $response->assertJsonValidationErrors("team_name");
         $response->assertJsonValidationErrors("country");
     }
 
@@ -124,14 +124,14 @@ class TeamTest extends TestCase
         $team = factory(Team::class)->create();
 
         $newTeamDetails = [
-            "name" => "New Team",
+            "team_name" => "New Team",
             "country" => "New Country",
         ];
 
         $response = $this->putJson('api/teams/' . $team->id, $newTeamDetails);
 
         $response->assertStatus(204);
-        $this->assertEquals("New Team", $team->fresh()->name);
+        $this->assertEquals("New Team", $team->fresh()->team_name);
         $this->assertEquals("New Country", $team->fresh()->country);
     }
     

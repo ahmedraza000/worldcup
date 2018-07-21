@@ -21,7 +21,7 @@ Route::group(['middleware' => 'auth:api'], function(){
 
 
 });
-Route::post('register/team','API\TeamController@register_team');
+
 
 /*Route::get('playerindex','UserController@playerindex');
 Route::post('register/team','TeamController@store');
@@ -33,7 +33,7 @@ Route::post('register/player','UserController@register_player');*/
     return $request->user();
 });*/
 
-/*  Route::group(['middleware' => 'auth:api', 'as' => 'api.', 'namespace' => 'Api'], function() {
+Route::group(['middleware' => 'auth:api', 'as' => 'api.', 'namespace' => 'Api'], function() {
     Route::resource('teams', 'TeamController');
-
-    });*/
+    Route::resource('players', 'PlayerController');
+});
