@@ -75,4 +75,26 @@ class PlayerTest extends TestCase
         $response->assertStatus(401);
     }
 
+    /** @test */
+    public function retrieve_team_player_list()
+    {
+        Passport::actingAs(factory(User::class)->create());
+
+        $team = factory(team::class)->create();
+
+        $player1 = factory(Player::class)->create(['team_id' => $team->id]);
+        $player2 = factory(Player::class)->create(['team_id' => $team->id]);
+        $player3 = factory(Player::class)->create(['team_id' => $team->id]);
+
+        $response = $this->withoutExceptionHandling()->getJson('api/teams/' . $team->id . '/players');
+
+        $response->assertSuccessful();
+        $this->assertCount(3, $response->json('data'));
+        $response->assertJson(['data' => [
+            $player1->toArray(),
+            $player2->toArray(),
+            $player3->toArray(),
+        ]]);
+    }
+
 }

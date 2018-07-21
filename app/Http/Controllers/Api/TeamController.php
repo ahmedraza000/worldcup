@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Resources\PlayerResource;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TeamResource;
@@ -14,26 +15,14 @@ class TeamController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public $successStatus = 200;
     public function index()
     {
         return TeamResource::collection(Team::all());
     }
-    public function register_team(Request $request)
-    {
-        if (empty($request->name))
-        {
-            return response()->json(['status'=>'error','message'=>'Team name required']);
-        }
-        else
-        {
-            $new_data = new Team;
-            $new_data->name = $request->name;
-            $new_data->country = $request->country;
-            $new_data->save();
 
-            return response()->json(['message' => 'Team Successfully Registered!','status' => $this->successStatus]);
-        }
+    public function players(Team $team)
+    {
+        return PlayerResource::collection($team->players);
     }
 
     /**

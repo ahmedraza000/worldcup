@@ -15,4 +15,9 @@ class Player extends Model
         "position",
     ];
 
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
+
 }

@@ -36,4 +36,6 @@ Route::post('register/player','UserController@register_player');*/
 Route::group(['middleware' => 'auth:api', 'as' => 'api.', 'namespace' => 'Api'], function() {
     Route::resource('teams', 'TeamController');
     Route::resource('players', 'PlayerController');
+
+    Route::get('teams/{team}/players', 'TeamController@players');
 });
