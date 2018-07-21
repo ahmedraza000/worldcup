@@ -158,14 +158,14 @@ class TeamTest extends TestCase
         $team = factory(Team::class)->create();
 
         $newTeamDetails = [
-            "name" => "",
+            "team_name" => "",
             "country" => "",
         ];
 
         $response = $this->putJson('api/teams/' . $team->id, $newTeamDetails);
 
         $response->assertStatus(422);
-        $response->assertJsonValidationErrors("name");
+        $response->assertJsonValidationErrors("team_name");
         $response->assertJsonValidationErrors("country");
     }
     
