@@ -38,4 +38,6 @@ Route::group(['middleware' => 'auth:api', 'as' => 'api.', 'namespace' => 'Api'],
     Route::resource('players', 'PlayerController');
 
     Route::get('teams/{team}/players', 'TeamController@players');
+
+    Route::get("matches", "MatchController@index");
 });

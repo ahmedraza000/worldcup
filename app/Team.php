@@ -10,6 +10,7 @@ class Team extends Model
     protected $fillable = [
         "team_name",
         "country",
+        "group_name"
     ];
 
     public function players()

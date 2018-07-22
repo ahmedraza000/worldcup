@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\PlayerResource;
+use App\Match;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\TeamResource;
-use App\Team;
 
-class TeamController extends Controller
+class MatchController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,12 +15,11 @@ class TeamController extends Controller
      */
     public function index()
     {
-        return TeamResource::collection(Team::all());
-    }
+        $matches = Match::all();
 
-    public function players(Team $team)
-    {
-        return PlayerResource::collection($team->players);
+        
+
+        return $matches;
     }
 
     /**
@@ -33,13 +30,7 @@ class TeamController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            "team_name" => ["required"],
-            "country" => ["required"],
-            "group_name" => ["required"],
-        ]);
-
-        return Team::create($data);
+        //
     }
 
     /**
@@ -48,9 +39,9 @@ class TeamController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Team $team)
+    public function show($id)
     {
-        return $team;
+        //
     }
 
     /**
@@ -60,17 +51,9 @@ class TeamController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Team $team)
+    public function update(Request $request, $id)
     {
-        $data = $request->validate([
-            "team_name" => ["required"],
-            "country" => ["required"],
-            "group_name" => ["required"],
-        ]);
-
-        $team->fill($data)->save();
-
-        return response()->json([], 204);
+        //
     }
 
     /**

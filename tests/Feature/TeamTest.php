@@ -79,9 +79,10 @@ class TeamTest extends TestCase
         $team = [
             "team_name" => "Team 1",
             "country" => "Russia",
+            "group_name" => "Group A",
         ];
 
-        $response = $this->postJson('api/teams', $team);
+        $response = $this->withoutExceptionHandling()->postJson('api/teams', $team);
 
         $response->assertStatus(201);
     }
@@ -107,6 +108,7 @@ class TeamTest extends TestCase
         $team = [
             "team_name" => "",
             "country" => "",
+            "group_name" => "",
         ];
 
         $response = $this->postJson('api/teams', $team);
@@ -114,6 +116,7 @@ class TeamTest extends TestCase
         $response->assertStatus(422);
         $response->assertJsonValidationErrors("team_name");
         $response->assertJsonValidationErrors("country");
+        $response->assertJsonValidationErrors("group_name");
     }
 
     /** @test */
@@ -126,6 +129,7 @@ class TeamTest extends TestCase
         $newTeamDetails = [
             "team_name" => "New Team",
             "country" => "New Country",
+            "group_name" => "Group B",
         ];
 
         $response = $this->putJson('api/teams/' . $team->id, $newTeamDetails);
@@ -133,6 +137,7 @@ class TeamTest extends TestCase
         $response->assertStatus(204);
         $this->assertEquals("New Team", $team->fresh()->team_name);
         $this->assertEquals("New Country", $team->fresh()->country);
+        $this->assertEquals("Group B", $team->fresh()->group_name);
     }
 
     /** @test */
@@ -143,6 +148,7 @@ class TeamTest extends TestCase
         $newTeamDetails = [
             "name" => "New Team",
             "country" => "New Country",
+            "group_name" => "Group A"
         ];
 
         $response = $this->putJson('api/teams/' . $team->id, $newTeamDetails);
@@ -160,6 +166,7 @@ class TeamTest extends TestCase
         $newTeamDetails = [
             "team_name" => "",
             "country" => "",
+            "group_name" => "",
         ];
 
         $response = $this->putJson('api/teams/' . $team->id, $newTeamDetails);
@@ -167,6 +174,7 @@ class TeamTest extends TestCase
         $response->assertStatus(422);
         $response->assertJsonValidationErrors("team_name");
         $response->assertJsonValidationErrors("country");
+        $response->assertJsonValidationErrors("group_name");
     }
     
 }
