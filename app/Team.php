@@ -21,5 +21,13 @@ class Team extends Model
     {
         return $this->hasMany(Player::class);
     }
+
+    public function isMatched($stage)
+    {
+        return Match::where("stage", $stage)
+                ->where("team_1", $this->id)
+                ->orWhere("team_2", $this->id)
+                ->get()->isNotEmpty();
+    }
     
 }

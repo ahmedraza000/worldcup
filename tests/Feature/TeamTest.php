@@ -58,7 +58,7 @@ class TeamTest extends TestCase
         $response = $this->getJson('api/teams/' . $team->id);
 
         $response->assertSuccessful();
-        $response->assertExactJson($team->toArray());
+        $response->assertJson($team->toArray());
     }
 
     /** @test */
