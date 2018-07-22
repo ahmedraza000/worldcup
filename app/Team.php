@@ -25,8 +25,10 @@ class Team extends Model
     public function isMatched($stage)
     {
         return Match::where("stage", $stage)
-                ->where("team_1", $this->id)
-                ->orWhere("team_2", $this->id)
+                ->where(function ($query) {
+                    $query->where("team_1", $this->id)
+                        ->orWhere("team_2", $this->id);
+                })
                 ->get()->isNotEmpty();
     }
     

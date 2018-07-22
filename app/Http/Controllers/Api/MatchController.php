@@ -19,26 +19,22 @@ class MatchController extends Controller
         $matches = Match::all();
         return $matches;
     }
-
     public function updateScores(Request $request, Match $match)
     {
         $data = $request->validate([
             "score_1" => "required|numeric",
             "score_2" => "required|numeric",
         ]);
-
         $score1 = $data['score_1'];
         $score2 = $data['score_2'];
         $winner = $score1 > $score2 ? $match->team_1 : $match->team_2;
-
         $match->score_1 = $score1;
         $match->score_2 = $score2;
         $match->winner = $winner;
         $match->save();
 
-        return response()->json([], 204);
+        return response()->json(["message" => "Success", "match" => $match->fresh()], 200);
     }
-
     public function round16()
     {
         $matches = Match::where("stage", "round16")->get();
@@ -49,6 +45,7 @@ class MatchController extends Controller
             ->orderBy('group_name')
             ->orderBy('position')
             ->get();
+          //dd($qualifiedTeams->toArray());
         // Matching Teams
         foreach($qualifiedTeams as $team) {
             $team1 = $team;
@@ -68,6 +65,7 @@ class MatchController extends Controller
             ]);
         }
         $matches = Match::where("stage", "round16")->get();
+
         return $matches;
     }
 

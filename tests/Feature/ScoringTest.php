@@ -86,7 +86,7 @@ class ScoringTest extends TestCase
 
         $response = $this->putJson('api/matches/' . $match->id . '/scores', $scores);
         $response->assertStatus(204);
-        $this->assertEquals(1, $match->fresh()->winner); // we expect that Team 1 should be the winner ys
+        $this->assertEquals(1, $match->fresh()->winner);
     }
 
     /** @test */

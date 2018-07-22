@@ -31,8 +31,8 @@
                             <tr style="text-align:center;">
 
                                 <td>{{$Teams->id}}</td>
-                                <td>{{$Teams->name}}</td>
-                                <td>{{$Teams->country}}</td>
+                                <td>{{$Teams->team_name}}</td>
+                                <td>{{$Teams->group_name}}</td>
 
                                 <td>
                                     <a href="#" class="btn btn-default btn-sm btn-icon icon-left">
