@@ -9,7 +9,7 @@ class CreateTeamsTable extends Migration
     /**
      * Run the migrations.
      *
-     * @return void
+     * @return
      */
     public function up()
     {
@@ -18,6 +18,7 @@ class CreateTeamsTable extends Migration
             $table->string('team_name');
             $table->string('country');
             $table->string('group_name');
+            $table->integer('position')->nullable();
             $table->timestamps();
         });
     }
