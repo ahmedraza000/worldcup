@@ -37,4 +37,6 @@ Route::group(['middleware' => 'auth:api', 'as' => 'api.', 'namespace' => 'Api'],
     Route::get('teams/{team}/players', 'TeamController@players');
     Route::get("matches", "MatchController@index");
     Route::get("matches/round16", "MatchController@round16");
+    Route::put("matches/{match}/scores", "MatchController@updateScores");
+
 });
